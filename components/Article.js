@@ -1,7 +1,9 @@
 // This is the data we will be using to create our articles. Look at it, then proceed to line 93.
 // OPTIONAL: if you're feeling adventurous, try to make this data an export from a different module, and import it here.
 // You can read about ES6 modules here: https://exploringjs.com/es6/ch_modules.html#sec_basics-of-es6-modules
-import data from './data'
+import { data } from './data'
+
+
 
 /*
   Step 1: Write a component called 'articleMaker' to create an article.
@@ -29,30 +31,48 @@ import data from './data'
   Refresh the page to see the new article.
 */
 
-function articleMaker(object){
+function articleMaker(data){
 
-  const article = document.createElement('.div');
-  const articleTitle = document.createElement('.h2');
+  const article = document.createElement('div');
+  const articleTitle = document.createElement('h2');
   const dateOfArticle = document.createElement('p');
   const p1 = document.createElement('p');
   const p2 = document.createElement('p');
   const p3 = document.createElement('p');
-  const span = document.createElement('span');
+  const expand = document.createElement('span');
 
   article.appendChild(articleTitle);
   article.appendChild(dateOfArticle);
   article.appendChild(p1);
   article.appendChild(p2);
   article.appendChild(p3);
-  article.appendChild(span);
+  article.appendChild(expand);
 
-article.classList.add('article');
-dateOfArticle.classList.add('date');
-span.classList.add('expandButton');
+  article.classList.add('article');
+  dateOfArticle.classList.add('date');
+  expand.classList.add('expandButton');
 
+  articleTitle.textContent = data.title;
+  dateOfArticle.textContent = data.date;
+  expand.textContent = '+'
+  p1.textContent =data.firstParagraph;
+  p2.textContent =data.secondParagraph;
+  p3.textContent =data.thirdParagraph;
 
-
+  expand.addEventListener('click', event=>{
+    article.classList.toggle('article-open')
+  });
 
 return article;
-
 }
+
+document.body.appendChild(articleMaker(data))
+
+console.log(articleMaker(data));
+
+let appendHere = document.querySelector('.articles')
+
+data.forEach(item => {
+  let newArticle = articleMaker(item)
+  appendHere.appendChild(newArticle)
+});
